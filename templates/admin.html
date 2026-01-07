@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Splendor Ratings - Admin Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🎲 Splendor Ratings</h1>
+            <p>Admin Panel</p>
+        </header>
+
+        <nav class="nav">
+            <a href="/" class="nav-link">Leaderboard</a>
+            <a href="/admin" class="nav-link">Admin Panel</a>
+        </nav>
+
+        <!-- Login Section -->
+        <div id="login-section" class="card">
+            <div class="card-header">
+                <h2 class="card-title">Admin Login</h2>
+            </div>
+
+            <div id="login-alert"></div>
+
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <input type="text" id="username" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" id="password" class="form-input" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+
+        <!-- Admin Panel (hidden until logged in) -->
+        <div id="admin-panel" class="hidden">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Player Management</h2>
+                    <button class="btn btn-secondary" onclick="handleLogout()">Logout</button>
+                </div>
+
+                <div id="admin-alert"></div>
+
+                <form id="add-player-form" onsubmit="handleAddPlayer(event)">
+                    <div class="form-group">
+                        <label class="form-label" for="player-name">Player Name</label>
+                        <input type="text" id="player-name" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="player-region">Region</label>
+                        <select id="player-region" class="form-select" required>
+                            <option value="">Select Region</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Player</button>
+                </form>
+
+                <h3 class="mt-2 mb-1">Current Players</h3>
+                <div id="players-loading" class="text-center">
+                    <div class="spinner"></div>
+                </div>
+                <div id="players-list" class="hidden"></div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Region Management</h2>
+                </div>
+                <form id="add-region-form" onsubmit="handleAddRegion(event)">
+                    <div class="form-group">
+                        <label class="form-label" for="region-name">Region Name</label>
+                        <input type="text" id="region-name" class="form-input" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Region</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Submit Game Results</h2>
+                </div>
+
+                <div id="game-alert"></div>
+
+                <form id="game-form" onsubmit="handleSubmitGame(event)">
+
+                    <div class="form-group">
+                        <label class="form-label">Number of Players</label>
+                        <select id="num-players" class="form-select" onchange="updatePlayerInputs()">
+                            <option value="2">2 Players</option>
+                            <option value="3">3 Players</option>
+                            <option value="4" selected>4 Players</option>
+                        </select>
+                    </div>
+
+                    <div id="player-inputs"></div>
+
+                    <button type="submit" class="btn btn-primary">Submit Game</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Recent Games</h2>
+                    <button class="btn btn-secondary" onclick="loadGames()">🔄 Refresh</button>
+                </div>
+
+                <div id="games-loading" class="text-center">
+                    <div class="spinner"></div>
+                </div>
+                <div id="games-list" class="hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/admin.js"></script>
+</body>
+
+</html>

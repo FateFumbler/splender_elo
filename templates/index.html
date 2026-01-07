@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Splendor Ratings - Leaderboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🎲 Splendor Ratings</h1>
+            <p>OpenSkill Plackett-Luce Rankings</p>
+        </header>
+
+        <nav class="nav">
+            <a href="/" class="nav-link">Leaderboard</a>
+            <a href="/admin" class="nav-link">Admin Panel</a>
+        </nav>
+
+        <div class="card">
+            <div class="card-header">
+                <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+                    <h2 class="card-title">Leaderboard</h2>
+                    <select id="region-filter" class="form-select" style="width: auto; margin-bottom: 0;"
+                        onchange="loadLeaderboard()">
+                        <option value="">Overall Rankings</option>
+                    </select>
+                </div>
+                <button class="btn btn-secondary" onclick="loadLeaderboard()">
+                    🔄 Refresh
+                </button>
+            </div>
+
+            <div id="loading" class="text-center">
+                <div class="spinner"></div>
+                <p class="text-muted">Loading rankings...</p>
+            </div>
+
+            <div id="leaderboard-container" class="hidden">
+                <div class="table-container">
+                    <table id="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Player</th>
+                                <th>Rating</th>
+                                <th>Games</th>
+                                <th>Win Rate</th>
+                                <th>Avg Points</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="no-players" class="hidden text-center">
+                <p class="text-muted">No players yet. Add players from the admin panel!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Player Details Modal -->
+    <div id="player-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-player-name">Player Details</h2>
+                <button class="modal-close" onclick="closePlayerModal()">&times;</button>
+            </div>
+
+            <div id="player-details">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">Rating</span>
+                        <span class="stat-value" id="modal-rating">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Games Played</span>
+                        <span class="stat-value" id="modal-games">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Win Rate</span>
+                        <span class="stat-value" id="modal-winrate">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Avg Points</span>
+                        <span class="stat-value" id="modal-avgpoints">-</span>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">Region</span>
+                        <span class="stat-value" id="modal-player-region">-</span>
+                    </div>
+                </div>
+
+                <h3 class="mt-2 mb-1">Placement Distribution</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">🥇 1st Place</span>
+                        <span class="stat-value" id="modal-first">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">🥈 2nd Place</span>
+                        <span class="stat-value" id="modal-second">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">🥉 3rd Place</span>
+                        <span class="stat-value" id="modal-third">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">4th Place</span>
+                        <span class="stat-value" id="modal-fourth">-</span>
+                    </div>
+                </div>
+
+                <h3 class="mt-2 mb-1">Recent Games</h3>
+                <div id="recent-games" class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Placement</th>
+                                <th>Points</th>
+                                <th>Rating Change</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-games-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+</body>
+
+</html>
